@@ -1,0 +1,47 @@
+---
+description: "Design and coding rules for a minimalist social media project. Style: Flat Design with Material principles, using only vanilla HTML/CSS/JS."
+globs: ["**/*.html", "**/*.css", "**/*.js"]
+alwaysApply: true
+---
+
+# 1. General Principles
+
+1.  **Minimal & Clean**: Prioritize whitespace. Display only essential information. Avoid non-functional decorative elements.
+2.  **White Mode Only**: The entire interface uses a white or very light gray background. Do not develop a dark mode.
+3.  **Flat Design meets Material**:
+    -   Use flat, solid colors.
+    -   Interactive elements (buttons, links) can have a subtle `box-shadow` on hover or focus to create a "raised" Material Design effect.
+    -   Use a gentle `border-radius` for buttons, cards, and inputs.
+
+# 2. HTML Structure
+
+1.  **Semantic HTML5**: Always use semantic HTML5 tags: `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`.
+2.  **File Separation**: Each main page (e.g., Home, Profile, Settings) must be a separate `.html` file.
+3.  **File Linking**:
+    -   All CSS files must be linked within the `<head>` tag.
+    -   All JS files must be linked at the end of the `<body>` tag to optimize page load speed.
+4.  **Post Structure**: A single post should be wrapped in an `<article class="post-card">` tag.
+
+# 3. CSS Rules
+
+1.  **CSS Variables**: Define all colors, fonts, and primary sizes in `:root` for easy management and consistency.
+2.  **Layout**: Use `Flexbox` or `Grid` for the main layout. Always apply `box-sizing: border-box;` to all elements.
+3.  **Typography**:
+    -   **Font Family**: Use `Inter` or `Roboto` from Google Fonts.
+    -   **Font Size**: Use `rem` units for easy scalability and accessibility.
+4.  **Color Palette (Example)**:
+    -   `--background-color: #FFFFFF;`
+    -   `--primary-color: #3498db;` (Accent color for buttons, links)
+    -   `--text-color: #333333;` (Avoid pure black #000000 for body text)
+    -   `--border-color: #E0E0E0;` (For borders and separators)
+5.  **Components**:
+    -   **Card (`.post-card`)**: White background, with a very light border (`1px solid var(--border-color)`) or a subtle `box-shadow` to separate it from the main background. Must have `padding`.
+    -   **Button (`.btn`)**: Background of `--primary-color`, white text, no border, small `border-radius` (e.g., 4px-8px). On hover, slightly increase brightness or add a gentle `box-shadow`.
+    -   **Input (`.form-input`)**: `border` with `var(--border-color)`, small `border-radius`. On `:focus`, the border color should change to `var(--primary-color)`.
+
+# 4. JavaScript Rules
+
+1.  **Vanilla JS Only**: Do not use any external frameworks or libraries (e.g., jQuery, React, Vue).
+2.  **ES6+ Syntax**: Use modern ES6+ syntax (e.g., `let`, `const`, arrow functions, promises).
+3.  **Event Delegation**: Use event delegation for dynamic lists (e.g., post feeds, comments) to optimize performance.
+4.  **Separation of Concerns**: Consider separating logic into smaller, dedicated files if the complexity grows (e.g., `api.js` for data fetching, `ui.js` for DOM manipulation).

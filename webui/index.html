@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home • PhotoLite</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <h1 class="logo"><a href="index.html">PhotoLite</a></h1>
+    
+    <header class="site-header">
+      <div class="header-inner">
+        <form class="search" role="search">
+          <label for="q" class="visually-hidden">Search</label>
+          <input id="q" class="form-input" type="search" placeholder="Search" />
+          <button class="btn sm" type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
+        </form>
+        <a href="profile.html" class="profile-btn">
+          <img class="avatar" src="assets/images/catsuba.jpeg" alt="Profile" />
+        </a>
+      </div>
+    </header>
+
+    <nav class="site-nav" aria-label="Primary">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="compose.html" class="nav-link"><i class="fas fa-plus-square"></i> Compose</a>
+        <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i> Notifications</a>
+        <a href="profile.html" class="nav-link"><i class="fas fa-user"></i> Profile</a>
+        <a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
+        <a href="login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+      </div>
+    </nav>
+
+    <main class="container" role="main">
+      <section class="stories" aria-label="Stories">
+        <div class="stories-scroll">
+          <div class="story">
+            <div class="ring"><img src="assets/images/catsuba.jpeg" alt="alex story" /></div>
+            <div class="name">alex</div>
+          </div>
+          <div class="story">
+            <div class="ring"><img src="assets/images/catsuba.jpeg" alt="jordan story" /></div>
+            <div class="name">jordan</div>
+          </div>
+          <div class="story">
+            <div class="ring"><img src="assets/images/catsuba.jpeg" alt="sam story" /></div>
+            <div class="name">sam</div>
+          </div>
+          <div class="story">
+            <div class="ring"><img src="assets/images/catsuba.jpeg" alt="mira story" /></div>
+            <div class="name">mira</div>
+          </div>
+        </div>
+      </section>
+      <section aria-label="Feed" class="feed">
+        <!-- Sample post cards (static) -->
+        <article class="post-card" role="article">
+          <header class="post-header">
+            <img class="avatar" src="assets/images/catsuba.jpeg" alt="User avatar" />
+            <div class="author-meta">
+              <a href="profile.html" class="author-name">alex</a>
+              <time datetime="2025-10-19" class="post-time">2h</time>
+            </div>
+          </header>
+          <div class="post-media">
+            <a href="post.html"><img src="assets/images/catsuba.jpeg" alt="Post image" /></a>
+          </div>
+          <div class="post-actions" role="group">
+            <button class="btn icon like-btn" aria-pressed="false" aria-label="Like">❤</button>
+            <button class="btn icon comment-btn" aria-label="Comment">💬</button>
+            <button class="btn icon save-btn" aria-pressed="false" aria-label="Save">🔖</button>
+            <span class="spacer"></span>
+            <button class="btn icon" aria-label="Share">↗</button>
+          </div>
+          <section class="post-caption">
+            <p><a href="profile.html" class="author-name">alex</a> Minimal caption goes here.</p>
+          </section>
+          <div class="post-meta">
+            <div class="likes-count">1,248 likes</div>
+          </div>
+          <div class="add-comment">
+            <input type="text" placeholder="Add a comment..." aria-label="Add a comment">
+            <button class="btn ghost" type="button">Post</button>
+          </div>
+        </article>
+
+        <article class="post-card" role="article">
+          <header class="post-header">
+            <img class="avatar" src="assets/images/catsuba.jpeg" alt="User avatar" />
+            <div class="author-meta">
+              <a href="profile.html" class="author-name">jordan</a>
+              <time datetime="2025-10-18" class="post-time">1d</time>
+            </div>
+          </header>
+          <div class="post-media">
+            <a href="post.html"><img src="assets/images/catsuba.jpeg" alt="Post image" /></a>
+          </div>
+          <div class="post-actions" role="group">
+            <button class="btn icon like-btn" aria-pressed="false" aria-label="Like">❤</button>
+            <button class="btn icon comment-btn" aria-label="Comment">💬</button>
+            <button class="btn icon save-btn" aria-pressed="false" aria-label="Save">🔖</button>
+            <span class="spacer"></span>
+            <button class="btn icon" aria-label="Share">↗</button>
+          </div>
+          <section class="post-caption">
+            <p><a href="profile.html" class="author-name">jordan</a> Another minimal caption.</p>
+          </section>
+          <div class="post-meta">
+            <div class="likes-count">732 likes</div>
+          </div>
+          <div class="add-comment">
+            <input type="text" placeholder="Add a comment..." aria-label="Add a comment">
+            <button class="btn ghost" type="button">Post</button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2025 PhotoLite</div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+  </html>
+
+

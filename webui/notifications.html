@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notifications • PhotoLite</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <h1 class="logo"><a href="index.html">PhotoLite</a></h1>
+    
+    <header class="site-header">
+      <div class="header-inner">
+        <form class="search" role="search">
+          <label for="q" class="visually-hidden">Search</label>
+          <input id="q" class="form-input" type="search" placeholder="Search" />
+          <button class="btn sm" type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
+        </form>
+        <a href="profile.html" class="profile-btn">
+          <img class="avatar" src="assets/images/catsuba.jpeg" alt="Profile" />
+        </a>
+      </div>
+    </header>
+
+    <nav class="site-nav" aria-label="Primary">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="compose.html" class="nav-link"><i class="fas fa-plus-square"></i> Compose</a>
+        <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i> Notifications</a>
+        <a href="profile.html" class="nav-link"><i class="fas fa-user"></i> Profile</a>
+        <a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> Settings</a>
+        <a href="login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+      </div>
+    </nav>
+
+    <main class="container" role="main">
+      <section class="notifications" aria-label="Notifications">
+        <div class="notification-item">
+          <img class="avatar" src="assets/images/catsuba.jpeg" alt="User avatar" />
+          <p><a class="author-name" href="profile.html">alex</a> liked your photo.</p>
+        </div>
+        <div class="notification-item">
+          <img class="avatar" src="assets/images/catsuba.jpeg" alt="User avatar" />
+          <p><a class="author-name" href="profile.html">jordan</a> started following you.</p>
+        </div>
+        <div class="notification-item">
+          <img class="avatar" src="assets/images/catsuba.jpeg" alt="User avatar" />
+          <p><a class="author-name" href="profile.html">sam</a> commented: “Looks great!”.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2025 PhotoLite</div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+  </html>
+
+
