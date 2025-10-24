@@ -1,0 +1,22 @@
+<Project>
+    <PropertyGroup>
+        <ModuleDirectory>$(MSBuildProjectDirectory)\..\</ModuleDirectory>
+        <BuildingBlocksDomainPath>$(MSBuildThisFileDirectory)BuildingBlocks\Domain\BuildingBlocks.Domain.csproj</BuildingBlocksDomainPath>
+        <BuildingBlocksApplicationPath>$(MSBuildThisFileDirectory)BuildingBlocks\Application\BuildingBlocks.Application.csproj</BuildingBlocksApplicationPath>
+        <BuildingBlocksInfrastructurePath>$(MSBuildThisFileDirectory)BuildingBlocks\Infrastructure\BuildingBlocks.Infrastructure.csproj</BuildingBlocksInfrastructurePath>
+    </PropertyGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Modules')) And $(MSBuildProjectName.EndsWith('Domain'))">
+        <ProjectReference Include="$(BuildingBlocksDomainPath)" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Modules')) And $(MSBuildProjectName.EndsWith('Application'))">
+        <ProjectReference Include="$(BuildingBlocksApplicationPath)" />
+        <ProjectReference Include="$(ModuleDirectory)Domain\*.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Modules')) And $(MSBuildProjectName.EndsWith('Infrastructure'))">
+        <ProjectReference Include="$(BuildingBlocksInfrastructurePath)" />
+        <ProjectReference Include="$(ModuleDirectory)Application\*.csproj"/>
+    </ItemGroup>
+</Project>

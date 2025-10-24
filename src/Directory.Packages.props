@@ -1,0 +1,11 @@
+<Project>
+    <ItemGroup Condition="$(MSBuildProjectName.Equals('BuildingBlocks.Domain'))">
+        <PackageReference Include="FluentResults" Version="4.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.Equals('BuildingBlocks.Application'))">
+    </ItemGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.Equals('BuildingBlocks.Infrastructure'))">
+    </ItemGroup>
+</Project>
