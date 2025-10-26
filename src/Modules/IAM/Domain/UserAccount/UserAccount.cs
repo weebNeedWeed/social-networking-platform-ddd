@@ -10,6 +10,7 @@ public class UserAccount : AggregateRoot<UserAccountId>
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }
     public AccountStatus Status { get; private set; }
+    public ActivationToken? ActivationToken { get; private set; }
 
     // TODO: should be in Profile BC
     public string? FirstName { get; private set; }
@@ -25,6 +26,7 @@ public class UserAccount : AggregateRoot<UserAccountId>
         string email,
         string passwordHash,
         AccountStatus status,
+        ActivationToken? activationToken,
         string? firstName,
         string? lastName,
         string? avatar,
@@ -42,6 +44,7 @@ public class UserAccount : AggregateRoot<UserAccountId>
         UserPrivacySetting = userPrivacySetting;
         Role = role;
         Status = status;
+        ActivationToken = activationToken;
     }
 
     public static UserAccount RegisterNew(
@@ -55,6 +58,7 @@ public class UserAccount : AggregateRoot<UserAccountId>
             email,
             passwordHash,
             AccountStatus.PendingVerification,
+            ActivationToken.CreateUnique(TimeSpan.FromDays(1)),
             null,
             null,
             null,

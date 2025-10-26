@@ -19,4 +19,8 @@
         <ProjectReference Include="$(BuildingBlocksInfrastructurePath)" />
         <ProjectReference Include="$(ModuleDirectory)Application\*.csproj"/>
     </ItemGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.Equals('WebApp'))">
+        <ProjectReference Include="..\Modules\*\Infrastructure\*.csproj" />
+    </ItemGroup>
 </Project>
