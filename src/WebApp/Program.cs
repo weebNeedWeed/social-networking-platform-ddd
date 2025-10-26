@@ -1,13 +1,14 @@
+using BuildingBlocks.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllersWithViews();
     builder.Services.AddMediator(o =>
     {
         o.ServiceLifetime = ServiceLifetime.Singleton;
-        o.Assemblies = [typeof(Modules.IAM.Infrastructure.IAMStartup).Assembly];
     });
+    builder.Services.RegisterInsfrastructureBuildingBlocks();
 }
-
 var app = builder.Build();
 {
     if (!app.Environment.IsDevelopment())

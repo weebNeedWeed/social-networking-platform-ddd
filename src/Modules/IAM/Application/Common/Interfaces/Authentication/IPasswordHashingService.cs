@@ -1,4 +1,4 @@
-namespace Modules.IAM.Application.Common.Interfaces;
+namespace Modules.IAM.Application.Common.Interfaces.Authentication;
 
 public interface IPasswordHashingService
 {

@@ -1,6 +1,6 @@
 using FluentResults;
 using Mediator;
-using Modules.IAM.Application.Common.Interfaces;
+using Modules.IAM.Application.Common.Interfaces.Authentication;
 using Modules.IAM.Application.Common.Interfaces.Persistence;
 using Modules.IAM.Domain.UserAccount;
 
@@ -10,7 +10,8 @@ public class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserComm
 {
     private readonly IIAMUnitOfWork _iAMUnitOfWork;
     private readonly IPasswordHashingService _passwordHashingService;
-public RegisterNewUserCommandHandler(IIAMUnitOfWork iAMUnitOfWork, IPasswordHashingService passwordHashingService)
+
+    public RegisterNewUserCommandHandler(IIAMUnitOfWork iAMUnitOfWork, IPasswordHashingService passwordHashingService)
     {
         _passwordHashingService = passwordHashingService;
         _iAMUnitOfWork = iAMUnitOfWork;
