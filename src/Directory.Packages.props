@@ -1,11 +1,19 @@
 <Project>
     <ItemGroup Condition="$(MSBuildProjectName.Equals('BuildingBlocks.Domain'))">
-        <PackageReference Include="FluentResults" Version="4.0.0" />
+        <PackageReference Include="FluentResults" Version="4.0.*" />
     </ItemGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.Equals('BuildingBlocks.Application'))">
+        <PackageReference Include="Mediator.SourceGenerator" Version="3.0.*">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Mediator.Abstractions" Version="3.0.*" />
     </ItemGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.Equals('BuildingBlocks.Infrastructure'))">
+        <PackageReference Include="Dapper" Version="2.1.*" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.*" />
+        <PackageReference Include="Npgsql" Version="9.0.*" />
     </ItemGroup>
 </Project>
