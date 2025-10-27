@@ -4,5 +4,5 @@ public interface IIAMUnitOfWork
 {
     IUserAccountRepository UserAccountRepository { get; }
 
-    Task CommitAsync();
+    void Commit();
 }
