@@ -1,14 +1,22 @@
+using System.Reflection;
 using BuildingBlocks.Infrastructure;
+using Modules.IAM.Application;
+using Modules.IAM.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllersWithViews();
-    builder.Services.AddMediator(o =>
+
+    var mediatRKey = builder.Configuration.GetValue<string>("MediatR:Key");
+    builder.Services.AddMediatR(c =>
     {
-        o.ServiceLifetime = ServiceLifetime.Singleton;
+        c.RegisterServicesFromAssemblies(typeof(IAMApplicationMarker).Assembly);
+        c.LicenseKey = mediatRKey;
     });
     builder.Services.RegisterInsfrastructureBuildingBlocks();
+    builder.Services.RegisterIAMModule();
 }
+
 var app = builder.Build();
 {
     if (!app.Environment.IsDevelopment())
