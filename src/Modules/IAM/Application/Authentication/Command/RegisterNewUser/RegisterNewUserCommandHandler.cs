@@ -1,5 +1,5 @@
 using FluentResults;
-using Mediator;
+using MediatR;
 using Modules.IAM.Application.Common.Interfaces.Authentication;
 using Modules.IAM.Application.Common.Interfaces.Persistence;
 using Modules.IAM.Domain.UserAccount;
@@ -17,7 +17,7 @@ public class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserComm
         _iAMUnitOfWork = iAMUnitOfWork;
     }
 
-    public async ValueTask<Result<RegisterNewUserResult>> Handle(RegisterNewUserCommand command, CancellationToken cancellationToken)
+    public async Task<Result<RegisterNewUserResult>> Handle(RegisterNewUserCommand command, CancellationToken cancellationToken)
     {
         await Task.CompletedTask;
 
@@ -40,7 +40,7 @@ public class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserComm
         );
 
         await _iAMUnitOfWork.UserAccountRepository.AddAsync(newUser);
-        await _iAMUnitOfWork.CommitAsync();
+        _iAMUnitOfWork.Commit();
 
         var result = new RegisterNewUserResult(newUser,
             newUser.ActivationToken!.Token,

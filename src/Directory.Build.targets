@@ -22,5 +22,6 @@
 
     <ItemGroup Condition="$(MSBuildProjectName.Equals('WebApp'))">
         <ProjectReference Include="..\Modules\*\Infrastructure\*.csproj" />
+        <ProjectReference Include="..\Modules\*\Application\*.csproj" />
     </ItemGroup>
 </Project>

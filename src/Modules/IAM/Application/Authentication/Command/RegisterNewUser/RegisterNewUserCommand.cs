@@ -1,5 +1,5 @@
 using FluentResults;
-using Mediator;
+using MediatR;
 
 namespace Modules.IAM.Application.Authentication.Command.RegisterNewUser;
 

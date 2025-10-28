@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS photolite_iam_schema.user_accounts;

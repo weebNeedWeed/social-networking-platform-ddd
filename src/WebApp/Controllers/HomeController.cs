@@ -1,5 +1,7 @@
 using System.Diagnostics;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Modules.IAM.Application.Authentication.Command.RegisterNewUser;
 using WebApp.Models;
 
 namespace WebApp.Controllers;
@@ -7,14 +9,21 @@ namespace WebApp.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly ISender _mediator;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ISender mediator)
     {
         _logger = logger;
+        _mediator = mediator;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+        await _mediator.Send(new RegisterNewUserCommand(
+            "hello",
+            "world",
+            "hi"
+        ));
         return View();
     }
 
