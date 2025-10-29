@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace BuildingBlocks.Infrastructure.Persistence;
+namespace BuildingBlocks.Application.Common.Interfaces;
 
 public interface IReadDbConnectionRouter
 {

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Activation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #F5F5F5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-header {
+            background-color: #3498db;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .email-header h1 {
+            color: #FFFFFF;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .email-body {
+            padding: 40px 30px;
+        }
+
+        .email-body h2 {
+            color: #333333;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .email-body p {
+            color: #555555;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .activation-button {
+            display: inline-block;
+            background-color: #3498db;
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .activation-button:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .alternative-link {
+            background-color: #F8F9FA;
+            border: 1px solid #E0E0E0;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 24px 0;
+            word-break: break-all;
+        }
+
+        .alternative-link p {
+            color: #666666;
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+        }
+
+        .alternative-link a {
+            color: #3498db;
+            font-size: 0.875rem;
+            word-break: break-all;
+        }
+
+        .email-footer {
+            background-color: #F8F9FA;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .email-footer p {
+            color: #888888;
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #E0E0E0;
+            margin: 24px 0;
+        }
+
+        .warning-text {
+            color: #E74C3C;
+            font-size: 0.875rem;
+            margin-top: 20px;
+        }
+
+        .expiry-info {
+            background-color: #FFF9E6;
+            border-left: 4px solid #FFC107;
+            padding: 12px 16px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .expiry-info p {
+            color: #856404;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .email-header {
+                padding: 30px 20px;
+            }
+
+            .email-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .email-body {
+                padding: 30px 20px;
+            }
+
+            .email-body h2 {
+                font-size: 1.25rem;
+            }
+
+            .activation-button {
+                padding: 12px 24px;
+                font-size: 0.9375rem;
+            }
+
+            .email-footer {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="email-header">
+            <h1>Welcome to Our Platform!</h1>
+        </div>
+
+        <!-- Body -->
+        <div class="email-body">
+            <h2>Hello {{USERNAME}},</h2>
+            
+            <p>
+                Thank you for signing up! We're excited to have you on board.
+            </p>
+            
+            <p>
+                To complete your registration and start using our service, please verify your email address by clicking the button below:
+            </p>
+
+            <div class="button-container">
+                <a href="{{ACTIVATION_LINK}}" class="activation-button">Activate Email</a>
+            </div>
+
+            <div class="expiry-info">
+                <p><strong>Note:</strong> This activation link will expire in 24 hours.</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="alternative-link">
+                <p><strong>If the button above doesn't work, please copy and paste the following link into your browser:</strong></p>
+                <a href="{{ACTIVATION_LINK}}">{{ACTIVATION_LINK}}</a>
+            </div>
+
+            <p class="warning-text">
+                <strong>⚠️ Security Notice:</strong> If you didn't create this account, please ignore this email or contact us immediately.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="email-footer">
+            <p><strong>Need Help?</strong></p>
+            <p>Contact us at: <a href="mailto:support@example.com" style="color: #3498db; text-decoration: none;">support@example.com</a></p>
+            <p style="margin-top: 16px;">© 2025 Social Networking Platform. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

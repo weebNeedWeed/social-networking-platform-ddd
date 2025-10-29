@@ -2,6 +2,7 @@ using FluentResults;
 using MediatR;
 using Modules.IAM.Application.Common.Interfaces.Authentication;
 using Modules.IAM.Application.Common.Interfaces.Persistence;
+using Modules.IAM.Application.Common.Interfaces.Services;
 using Modules.IAM.Domain.UserAccount;
 
 namespace Modules.IAM.Application.Authentication.Command.RegisterNewUser;
@@ -10,11 +11,13 @@ public class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserComm
 {
     private readonly IIAMUnitOfWork _iAMUnitOfWork;
     private readonly IPasswordHashingService _passwordHashingService;
+    private readonly IIAMEmailService _iAMEmailService;
 
-    public RegisterNewUserCommandHandler(IIAMUnitOfWork iAMUnitOfWork, IPasswordHashingService passwordHashingService)
+    public RegisterNewUserCommandHandler(IIAMUnitOfWork iAMUnitOfWork, IPasswordHashingService passwordHashingService, IIAMEmailService iAMEmailService)
     {
         _passwordHashingService = passwordHashingService;
         _iAMUnitOfWork = iAMUnitOfWork;
+        _iAMEmailService = iAMEmailService;
     }
 
     public async Task<Result<RegisterNewUserResult>> Handle(RegisterNewUserCommand command, CancellationToken cancellationToken)
@@ -42,10 +45,9 @@ public class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserComm
         await _iAMUnitOfWork.UserAccountRepository.AddAsync(newUser);
         _iAMUnitOfWork.Commit();
 
-        var result = new RegisterNewUserResult(newUser,
-            newUser.ActivationToken!.Token,
-            newUser.ActivationToken!.ExpiresAt);
+        await _iAMEmailService.SendActivationEmailAsync(newUser.Email, newUser.ActivationToken!.Token);
+        var result = new RegisterNewUserResult(newUser);
 
-        return Result.Ok();
+        return Result.Ok(result);
     }
 }

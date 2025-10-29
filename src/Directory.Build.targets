@@ -24,4 +24,12 @@
         <ProjectReference Include="..\Modules\*\Infrastructure\*.csproj" />
         <ProjectReference Include="..\Modules\*\Application\*.csproj" />
     </ItemGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.Equals('BuildingBlocks.Infrastructure'))">
+        <ProjectReference Include="$(BuildingBlocksApplicationPath)"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(MSBuildProjectName.Equals('BuildingBlocks.Application'))">
+        <ProjectReference Include="$(BuildingBlocksDomainPath)" />
+    </ItemGroup>
 </Project>

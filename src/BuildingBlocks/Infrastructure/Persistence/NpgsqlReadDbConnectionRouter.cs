@@ -1,4 +1,6 @@
 using System.Data;
+using BuildingBlocks.Application.Common;
+using BuildingBlocks.Application.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 

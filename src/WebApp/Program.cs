@@ -1,4 +1,3 @@
-using System.Reflection;
 using BuildingBlocks.Infrastructure;
 using Modules.IAM.Application;
 using Modules.IAM.Infrastructure;
