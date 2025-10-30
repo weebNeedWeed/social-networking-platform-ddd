@@ -1,0 +1,86 @@
+@using WebApp.Models.Auth
+@model RegisterViewModel
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register | PhotoLite</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/fontawesome/all.min.css">
+    <link rel="stylesheet" href="~/css/styles.css">
+</head>
+
+<body class="auth-page">
+    <main>
+        <section class="auth-card" aria-label="Register">
+            <div class="brand">PhotoLite</div>
+            <form class="auth-form" asp-controller="Auth" asp-action="Register" method="POST">
+                <div class="form-row">
+                    <label asp-for="UserName" class="form-label">Username</label>
+                    <input asp-for="UserName" class="form-input" type="text"
+                        placeholder="Your username" required minlength="3" maxlength="50" pattern="^[a-zA-Z0-9_-]+$"
+                        title="3-50 characters: letters, numbers, underscore (_) and hyphen (-)" />
+                </div>
+                <div class="form-row">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-input" type="email"
+                        placeholder="you@example.com" required maxlength="255"
+                        title="Enter a valid email address (max 255 characters)" />
+                </div>
+                <div class="form-row">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" class="form-input" type="password"
+                        placeholder="••••••••" required minlength="8" maxlength="100"
+                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,100}$"
+                        title="8-100 chars, include uppercase, lowercase, number, and special character" />
+                </div>
+                <div class="form-row">
+                    <label asp-for="PasswordConfirmation" class="form-label">Confirm password</label>
+                    <input asp-for="PasswordConfirmation" class="form-input" type="password"
+                        placeholder="Re-enter your password" required minlength="8" maxlength="100"
+                        pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,100}$"
+                        title="Re-enter the same password" />
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn" style="width:100%">Create account</button>
+                </div>
+            </form>
+            <div class="alt">Already have an account? <a href="login.html">Log in</a></div>
+        </section>
+    </main>
+    <script>
+        (function () {
+            const form = document.querySelector('.auth-form');
+            if (!form) return;
+            const password = document.getElementById('register-password');
+            const confirmPassword = document.getElementById('register-password-confirm');
+
+            const validatePasswordsMatch = () => {
+                if (!password || !confirmPassword) return true;
+                const match = confirmPassword.value === password.value;
+                confirmPassword.setCustomValidity(match ? '' : 'Passwords do not match');
+                return match;
+            };
+
+            if (password && confirmPassword) {
+                password.addEventListener('input', validatePasswordsMatch);
+                confirmPassword.addEventListener('input', validatePasswordsMatch);
+            }
+            form.addEventListener('submit', (event) => {
+                const passwordsOk = validatePasswordsMatch();
+                if (!passwordsOk || !form.checkValidity()) {
+                    event.preventDefault();
+                    form.reportValidity();
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>
