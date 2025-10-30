@@ -1,3 +1,4 @@
+using BuildingBlocks.Application.Common.Behaviors;
 using BuildingBlocks.Infrastructure;
 using Modules.IAM.Application;
 using Modules.IAM.Infrastructure;
@@ -11,8 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
     {
         c.RegisterServicesFromAssemblies(typeof(IAMApplicationMarker).Assembly);
         c.LicenseKey = mediatRKey;
+        c.AddOpenBehavior(typeof(ValidationBehavior<,>));
     });
-    builder.Services.RegisterInsfrastructureBuildingBlocks();
+    builder.Services.RegisterInsfrastructureBuildingBlocks(builder.Configuration);
     builder.Services.RegisterIAMModule();
 }
 

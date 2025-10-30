@@ -2,6 +2,7 @@ using System.Diagnostics;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Modules.IAM.Application.Authentication.Command.RegisterNewUser;
+using Modules.IAM.Application.Common.Interfaces.Services;
 using WebApp.Models;
 
 namespace WebApp.Controllers;
@@ -19,11 +20,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        await _mediator.Send(new RegisterNewUserCommand(
-            "hello",
-            "world",
-            "hi"
-        ));
+        var result = await _mediator.Send(new RegisterNewUserCommand("hello", "hello", "hello"));
         return View();
     }
 

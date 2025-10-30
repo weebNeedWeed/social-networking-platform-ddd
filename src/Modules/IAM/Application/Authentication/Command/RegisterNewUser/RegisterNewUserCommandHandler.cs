@@ -1,4 +1,5 @@
 using FluentResults;
+using FluentValidation;
 using MediatR;
 using Modules.IAM.Application.Common.Interfaces.Authentication;
 using Modules.IAM.Application.Common.Interfaces.Persistence;
@@ -12,18 +13,18 @@ public class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserComm
     private readonly IIAMUnitOfWork _iAMUnitOfWork;
     private readonly IPasswordHashingService _passwordHashingService;
     private readonly IIAMEmailService _iAMEmailService;
+    private readonly IValidator<RegisterNewUserCommand> _validator;
 
-    public RegisterNewUserCommandHandler(IIAMUnitOfWork iAMUnitOfWork, IPasswordHashingService passwordHashingService, IIAMEmailService iAMEmailService)
+    public RegisterNewUserCommandHandler(IIAMUnitOfWork iAMUnitOfWork, IPasswordHashingService passwordHashingService, IIAMEmailService iAMEmailService, IValidator<RegisterNewUserCommand> validator)
     {
         _passwordHashingService = passwordHashingService;
         _iAMUnitOfWork = iAMUnitOfWork;
         _iAMEmailService = iAMEmailService;
+        _validator = validator;
     }
 
     public async Task<Result<RegisterNewUserResult>> Handle(RegisterNewUserCommand command, CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-
         if (await _iAMUnitOfWork.UserAccountRepository.ExistsByUserNameAsync(command.UserName))
         {
             throw new ArgumentException("Invalid UserName");
@@ -45,7 +46,7 @@ public class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserComm
         await _iAMUnitOfWork.UserAccountRepository.AddAsync(newUser);
         _iAMUnitOfWork.Commit();
 
-        await _iAMEmailService.SendActivationEmailAsync(newUser.Email, newUser.ActivationToken!.Token);
+        await _iAMEmailService.SendActivationEmailAsync(newUser);
         var result = new RegisterNewUserResult(newUser);
 
         return Result.Ok(result);

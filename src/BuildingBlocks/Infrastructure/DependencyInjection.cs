@@ -12,7 +12,7 @@ public static class DependencyInjection
     {
         services.Configure<EmailOptions>(configuration.GetSection(EmailOptions.SectionName));
         services.AddSingleton<IReadDbConnectionRouter, NpgsqlReadDbConnectionRouter>();
-        services.AddSingleton<IEmailServiceBase, IEmailServiceBase>();
+        services.AddSingleton<IEmailServiceBase, EmailServiceBase>();
 
         return services;
     }
