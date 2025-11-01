@@ -257,6 +257,25 @@ img { max-width: 100%; display: block; }
 .form-row { margin-bottom: var(--space-2); }
 .form-label { display: block; margin-bottom: 6px; font-weight: 500; }
 .form-actions { margin-top: var(--space-2); }
+.error-message {
+  display: block;
+  min-height: 1.25rem;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 4px;
+  line-height: 1.25rem;
+  visibility: hidden;
+}
+.error-message:not(:empty) {
+  visibility: visible;
+}
+.form-input.error {
+  border-color: #dc3545;
+}
+.form-input.error:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+}
 
 /* Cards */
 .post-card { background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); margin: var(--space-3) auto; max-width: 640px; width: 100%; overflow: hidden; box-sizing: border-box; }
@@ -400,13 +419,33 @@ input[type="checkbox"].toggle-input:checked + .toggle::after { left: 24px; }
   border: 1px solid var(--border-color); 
   border-radius: var(--radius-md); 
   background: #fff; 
-  padding: var(--space-4); 
+  padding: var(--space-3); 
   box-shadow: 0 6px 24px rgba(0,0,0,0.04);
   margin: 0;
+  font-size: 0.9rem;
 }
-.auth-card .brand { text-align: center; font-weight: 700; margin-bottom: var(--space-3); font-size: 1.75rem; }
-.auth-card .alt { text-align: center; margin-top: var(--space-2); color: var(--muted-text); }
+body.auth-page {
+  font-size: 0.9rem;
+}
+.auth-card .brand { text-align: center; font-weight: 700; margin-bottom: var(--space-2); font-size: 1.5rem; }
+.auth-card .alt { text-align: center; margin-top: var(--space-2); color: var(--muted-text); font-size: 0.875rem; }
 .auth-card .alt a { color: var(--link-color); }
+.auth-card .form-row { margin-bottom: 0.75rem; }
+.auth-card .form-label { margin-bottom: 4px; font-size: 0.875rem; }
+.auth-card .form-input {
+  padding: 8px 10px;
+  font-size: 0.875rem;
+}
+.auth-card .error-message {
+  font-size: 0.8rem;
+  margin-top: 3px;
+  min-height: 1.1rem;
+  line-height: 1.1rem;
+}
+.auth-card .btn {
+  padding: 7px 14px;
+  font-size: 0.875rem;
+}
 
 /* Responsive */
 @media (max-width: 960px) {

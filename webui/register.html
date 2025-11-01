@@ -15,19 +15,23 @@
         <form class="auth-form">
           <div class="form-row">
             <label for="register-username" class="form-label">Username</label>
-            <input id="register-username" name="username" class="form-input" type="text" placeholder="Your username" required minlength="3" maxlength="50" pattern="^[a-zA-Z0-9_-]+$" title="3-50 characters: letters, numbers, underscore (_) and hyphen (-)" />
+            <input id="register-username" name="username" class="form-input" type="text" placeholder="Your username" />
+            <span class="error-message" id="register-username-error"></span>
           </div>
           <div class="form-row">
             <label for="register-email" class="form-label">Email</label>
-            <input id="register-email" name="email" class="form-input" type="email" placeholder="you@example.com" required maxlength="255" title="Enter a valid email address (max 255 characters)" />
+            <input id="register-email" name="email" class="form-input" type="email" placeholder="you@example.com" />
+            <span class="error-message" id="register-email-error"></span>
           </div>
           <div class="form-row">
             <label for="register-password" class="form-label">Password</label>
-            <input id="register-password" name="password" class="form-input" type="password" placeholder="••••••••" required minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,100}$" title="8-100 chars, include uppercase, lowercase, number, and special character" />
+            <input id="register-password" name="password" class="form-input" type="password" placeholder="••••••••" />
+            <span class="error-message" id="register-password-error"></span>
           </div>
           <div class="form-row">
             <label for="register-password-confirm" class="form-label">Confirm password</label>
-            <input id="register-password-confirm" name="confirmPassword" class="form-input" type="password" placeholder="Re-enter your password" required minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,100}$" title="Re-enter the same password" />
+            <input id="register-password-confirm" name="confirmPassword" class="form-input" type="password" placeholder="Re-enter your password" />
+            <span class="error-message" id="register-password-confirm-error"></span>
           </div>
           <div class="form-actions">
             <button type="submit" class="btn" style="width:100%">Create account</button>
@@ -40,25 +44,147 @@
       (function () {
         const form = document.querySelector('.auth-form');
         if (!form) return;
+
+        const username = document.getElementById('register-username');
+        const email = document.getElementById('register-email');
         const password = document.getElementById('register-password');
         const confirmPassword = document.getElementById('register-password-confirm');
 
-        const validatePasswordsMatch = () => {
-          if (!password || !confirmPassword) return true;
-          const match = confirmPassword.value === password.value;
-          confirmPassword.setCustomValidity(match ? '' : 'Passwords do not match');
-          return match;
-        };
+        const usernameError = document.getElementById('register-username-error');
+        const emailError = document.getElementById('register-email-error');
+        const passwordError = document.getElementById('register-password-error');
+        const confirmPasswordError = document.getElementById('register-password-confirm-error');
 
-        if (password && confirmPassword) {
-          password.addEventListener('input', validatePasswordsMatch);
-          confirmPassword.addEventListener('input', validatePasswordsMatch);
+        function showError(inputElement, errorElement, message) {
+          if (errorElement && message) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            if (inputElement) {
+              inputElement.classList.add('error');
+            }
+            return false;
+          }
+          return true;
         }
+
+        function hideError(inputElement, errorElement) {
+          if (errorElement) {
+            errorElement.textContent = '';
+            errorElement.style.display = 'none';
+          }
+          if (inputElement) {
+            inputElement.classList.remove('error');
+          }
+        }
+
+        function validateUsername() {
+          const value = username.value.trim();
+          hideError(username, usernameError);
+          
+          if (!value) {
+            return showError(username, usernameError, 'Username is required');
+          }
+          if (value.length < 3) {
+            return showError(username, usernameError, 'Username must be at least 3 characters');
+          }
+          if (value.length > 50) {
+            return showError(username, usernameError, 'Username must not exceed 50 characters');
+          }
+          if (!/^[a-zA-Z0-9_-]+$/.test(value)) {
+            return showError(username, usernameError, 'Username can only contain letters, numbers, underscores and hyphens');
+          }
+          return true;
+        }
+
+        function validateEmail() {
+          const value = email.value.trim();
+          hideError(email, emailError);
+          
+          if (!value) {
+            return showError(email, emailError, 'Email is required');
+          }
+          if (value.length > 255) {
+            return showError(email, emailError, 'Email must not exceed 255 characters');
+          }
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+            return showError(email, emailError, 'Email must be a valid email address');
+          }
+          return true;
+        }
+
+        function validatePassword() {
+          const value = password.value;
+          hideError(password, passwordError);
+          
+          if (!value) {
+            return showError(password, passwordError, 'Password is required');
+          }
+          if (value.length < 8) {
+            return showError(password, passwordError, 'Password must be at least 8 characters');
+          }
+          if (value.length > 100) {
+            return showError(password, passwordError, 'Password must not exceed 100 characters');
+          }
+          if (!/[A-Z]/.test(value)) {
+            return showError(password, passwordError, 'Password must contain at least one uppercase letter');
+          }
+          if (!/[a-z]/.test(value)) {
+            return showError(password, passwordError, 'Password must contain at least one lowercase letter');
+          }
+          if (!/[0-9]/.test(value)) {
+            return showError(password, passwordError, 'Password must contain at least one number');
+          }
+          if (!/[^a-zA-Z0-9]/.test(value)) {
+            return showError(password, passwordError, 'Password must contain at least one special character');
+          }
+          return true;
+        }
+
+        function validateConfirmPassword() {
+          const value = confirmPassword.value;
+          hideError(confirmPassword, confirmPasswordError);
+          
+          if (!value) {
+            return showError(confirmPassword, confirmPasswordError, 'Password confirmation is required');
+          }
+          if (password.value !== value) {
+            return showError(confirmPassword, confirmPasswordError, 'Passwords do not match');
+          }
+          return true;
+        }
+
+        // Real-time validation on input
+        username.addEventListener('input', validateUsername);
+        username.addEventListener('blur', validateUsername);
+        email.addEventListener('input', validateEmail);
+        email.addEventListener('blur', validateEmail);
+        password.addEventListener('input', () => {
+          validatePassword();
+          if (confirmPassword.value) {
+            validateConfirmPassword();
+          }
+        });
+        password.addEventListener('blur', validatePassword);
+        confirmPassword.addEventListener('input', validateConfirmPassword);
+        confirmPassword.addEventListener('blur', validateConfirmPassword);
+
         form.addEventListener('submit', (event) => {
-          const passwordsOk = validatePasswordsMatch();
-          if (!passwordsOk || !form.checkValidity()) {
-            event.preventDefault();
-            form.reportValidity();
+          event.preventDefault();
+          
+          const usernameValid = validateUsername();
+          const emailValid = validateEmail();
+          const passwordValid = validatePassword();
+          const confirmPasswordValid = validateConfirmPassword();
+
+          if (usernameValid && emailValid && passwordValid && confirmPasswordValid) {
+            form.submit();
+          } else {
+            // Focus first invalid field
+            if (!usernameValid) username.focus();
+            else if (!emailValid) email.focus();
+            else if (!passwordValid) password.focus();
+            else if (!confirmPasswordValid) confirmPassword.focus();
           }
         });
       })();

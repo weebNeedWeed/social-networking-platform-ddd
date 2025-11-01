@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text;
 using BuildingBlocks.Application.Common.Interfaces;
+using Microsoft.AspNetCore.Http;
 using MimeKit;
 using Modules.IAM.Application.Common.Interfaces.Services;
 using Modules.IAM.Domain.UserAccount;
@@ -10,24 +11,29 @@ namespace Modules.IAM.Infrastructure.Services;
 public class IAMEmailService : IIAMEmailService
 {
     private readonly IEmailServiceBase _emailServiceBase;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public IAMEmailService(IEmailServiceBase emailServiceBase)
+    public IAMEmailService(IEmailServiceBase emailServiceBase, IHttpContextAccessor httpContextAccessor)
     {
         _emailServiceBase = emailServiceBase;
+        _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task SendActivationEmailAsync(UserAccount userAccount)
+    public async Task SendActivationEmailAsync(string userName, string email, string token)
     {
         var message = new MimeMessage();
 
-        var to = new MailboxAddress("", userAccount.Email);
+        var to = new MailboxAddress("", email);
         message.To.Add(to);
         message.From.Add(_emailServiceBase.From);
 
         message.Subject = "Verify Your Email Address";
 
+        var activateLink = string.Format("{0}://{1}/auth/activate", _httpContextAccessor.HttpContext.Request.Scheme, _httpContextAccessor.HttpContext.Request.Host);
+
         var emailContent = GetActivationEmailTemplate();
-        emailContent = emailContent.Replace("{{USERNAME}}", userAccount.UserName);
+        emailContent = emailContent.Replace("{{USERNAME}}", userName);
+        emailContent = emailContent.Replace("{{ACTIVATION_LINK}}", activateLink);
 
         message.Body = new TextPart(MimeKit.Text.TextFormat.Html)
         {

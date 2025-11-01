@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration Successful • PhotoLite</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body class="auth-page">
+    <main>
+      <section class="auth-card" aria-label="Registration Successful">
+        <div class="brand">PhotoLite</div>
+        <div style="text-align: center; padding: var(--space-3) 0;">
+          <div style="width: 80px; height: 80px; margin: 0 auto var(--space-3); background: #e8f5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-check-circle" style="font-size: 3rem; color: #4caf50;"></i>
+          </div>
+          <h2 style="margin: 0 0 var(--space-2); font-size: 1.5rem; font-weight: 600; color: var(--text-color);">Registration Successful!</h2>
+          <p style="color: var(--muted-text); line-height: 1.6; margin-bottom: var(--space-3);">
+            Your account has been created successfully. Please check your email inbox to activate your account.
+          </p>
+          <p style="color: var(--muted-text); font-size: 0.875rem; line-height: 1.5;">
+            If you don't see the email, please check your spam folder or click the resend button below.
+          </p>
+        </div>
+        <form id="resend-form" class="auth-form" style="display: none;">
+        </form>
+        <div class="form-actions" style="margin-top: var(--space-3);">
+          <button type="button" id="resend-btn" class="btn" style="width:100%; margin-bottom: var(--space-2);">
+            <i class="fas fa-paper-plane"></i> <span id="resend-text">Resend Activation Email</span>
+          </button>
+          <div style="text-align: center;">
+            <a href="login.html" style="color: var(--link-color); font-size: 0.875rem;">Back to Login</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      (function () {
+        const form = document.getElementById('resend-form');
+        const btn = document.getElementById('resend-btn');
+        const btnText = document.getElementById('resend-text');
+        const COOLDOWN_SECONDS = 60;
+        let cooldownTimer = null;
+        let remainingSeconds = 0;
+
+        // Check if there's a cooldown in sessionStorage
+        const lastSentTime = sessionStorage.getItem('lastResendTime');
+        if (lastSentTime) {
+          const elapsed = Math.floor((Date.now() - parseInt(lastSentTime)) / 1000);
+          if (elapsed < COOLDOWN_SECONDS) {
+            remainingSeconds = COOLDOWN_SECONDS - elapsed;
+            startCooldown(remainingSeconds);
+          }
+        }
+
+        function startCooldown(seconds) {
+          remainingSeconds = seconds;
+          btn.disabled = true;
+          btn.style.opacity = '0.6';
+          btn.style.cursor = 'not-allowed';
+          
+          updateButtonText();
+
+          cooldownTimer = setInterval(() => {
+            remainingSeconds--;
+            updateButtonText();
+
+            if (remainingSeconds <= 0) {
+              clearInterval(cooldownTimer);
+              btn.disabled = false;
+              btn.style.opacity = '1';
+              btn.style.cursor = 'pointer';
+              btnText.textContent = 'Resend Activation Email';
+              sessionStorage.removeItem('lastResendTime');
+            }
+          }, 1000);
+        }
+
+        function updateButtonText() {
+          btnText.textContent = `Resend in ${remainingSeconds}s`;
+        }
+
+        btn.addEventListener('click', () => {
+          // Check if still in cooldown
+          if (remainingSeconds > 0) {
+            return;
+          }
+
+          // Save current time to sessionStorage
+          sessionStorage.setItem('lastResendTime', Date.now().toString());
+          
+          // Start cooldown
+          startCooldown(COOLDOWN_SECONDS);
+
+          // Submit the form
+          form.submit();
+        });
+      })();
+    </script>
+  </body>
+</html>
+

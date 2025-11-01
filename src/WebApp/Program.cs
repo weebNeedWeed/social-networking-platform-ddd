@@ -16,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
     });
     builder.Services.RegisterInsfrastructureBuildingBlocks(builder.Configuration);
     builder.Services.RegisterIAMModule();
+    builder.Services.AddHttpContextAccessor();
 }
 
 var app = builder.Build();

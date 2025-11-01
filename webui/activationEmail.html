@@ -61,7 +61,7 @@
         .activation-button {
             display: inline-block;
             background-color: #3498db;
-            color: #FFFFFF;
+            color: #FFFFFF !important;
             text-decoration: none;
             padding: 14px 32px;
             border-radius: 6px;
@@ -71,9 +71,16 @@
             transition: all 0.3s ease;
         }
 
+        .activation-button:link,
+        .activation-button:visited,
+        .activation-button:active {
+            color: #FFFFFF !important;
+        }
+
         .activation-button:hover {
             background-color: #2980b9;
             box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            color: #FFFFFF !important;
         }
 
         .button-container {

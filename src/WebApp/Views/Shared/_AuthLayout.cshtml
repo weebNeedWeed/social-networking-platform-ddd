@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register | PhotoLite</title>
+  <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="~/lib/fontawesome/all.min.css">
+  <link rel="stylesheet" href="~/css/styles.css">
+  <link rel="stylesheet" href="~/lib/toastr/toastr.min.css">
+</head>
+
+<body class="auth-page">
+  <main>
+    @RenderBody()
+  </main>
+
+  <script src="~/lib/jquery/jquery.min.js"></script>
+  <script src="~/lib/toastr/toastr.min.js"></script>
+
+  @await RenderSectionAsync("Scripts", false)
+</body>
+
+</html>
