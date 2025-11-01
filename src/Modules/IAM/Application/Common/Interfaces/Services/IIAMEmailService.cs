@@ -4,5 +4,5 @@ namespace Modules.IAM.Application.Common.Interfaces.Services;
 
 public interface IIAMEmailService
 {
-    Task SendActivationEmailAsync(string userName, string email, string token);
+    Task SendActivationEmailAsync(Guid userId, string userName, string email, string token);
 }

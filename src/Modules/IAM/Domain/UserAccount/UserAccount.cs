@@ -1,4 +1,6 @@
 using BuildingBlocks.Domain;
+using FluentResults;
+using Modules.IAM.Domain.Common.Errors;
 using Modules.IAM.Domain.UserAccount.ValueObjects;
 using Modules.IAM.Domain.UserPrivacySetting.ValueObjects;
 
@@ -19,7 +21,7 @@ public class UserAccount : AggregateRoot<UserAccountId>
     public string? Bio { get; private set; }
 
     public UserPrivacySettingId? UserPrivacySetting { get; private set; }
-    public Role? Role { get; private set; }
+    public Role Role { get; private set; }
 
     private UserAccount(UserAccountId id,
         string userName,
@@ -32,7 +34,7 @@ public class UserAccount : AggregateRoot<UserAccountId>
         string? avatar,
         string? bio,
         UserPrivacySettingId? userPrivacySetting,
-        Role? role) : base(id)
+        Role role) : base(id)
     {
         UserName = userName;
         Email = email;
@@ -64,7 +66,64 @@ public class UserAccount : AggregateRoot<UserAccountId>
             null,
             null,
             null,
-            null
+            Role.User
         );
+    }
+
+    public static UserAccount Create(
+        UserAccountId id,
+        string userName,
+        string email,
+        string passwordHash,
+        AccountStatus status,
+        ActivationToken? activationToken,
+        string? firstName,
+        string? lastName,
+        string? avatar,
+        string? bio,
+        UserPrivacySettingId? userPrivacySetting,
+        Role role)
+    {
+        return new UserAccount(
+            id,
+            userName,
+            email,
+            passwordHash,
+            status,
+            activationToken,
+            firstName,
+            lastName,
+            avatar,
+            bio,
+            userPrivacySetting,
+            role
+        );
+    }
+
+    public Result Activate(string token)
+    {
+        if (ActivationToken is null)
+        {
+            return Result.Fail(new ActivationTokenNotFoundError());
+        }
+
+        if (ActivationToken!.Token != token)
+        {
+            return Result.Fail(new InvalidActivationTokenError());
+        }
+
+        if (ActivationToken!.ExpiresAt < DateTime.UtcNow)
+        {
+            return Result.Fail(new ActivationTokenExpiredError());
+        }
+
+        if(Status != AccountStatus.PendingVerification) {
+            return Result.Fail(new AccountAlreadyActivatedError());
+        }
+
+        Status = AccountStatus.Active;
+        ActivationToken = null;
+
+        return Result.Ok();
     }
 }

@@ -20,4 +20,9 @@ public class UserPrivacySettingId : ValueObject
     {
         return new UserPrivacySettingId(Guid.NewGuid());
     }
+
+    public static UserPrivacySettingId FromValue(Guid value)
+    {
+        return new UserPrivacySettingId(value);
+    }
 }

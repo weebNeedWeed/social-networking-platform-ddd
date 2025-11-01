@@ -25,10 +25,10 @@ public class ResendActivationTokenQueryHandler : IRequestHandler<ResendActivatio
             SELECT 
                 email, 
                 userName,
-                activation_token ->> 'Token' token,
-                activation_token ->> 'ExpiresAt' expiresAt
+                activationToken ->> 'Token' token,
+                activationToken ->> 'ExpiresAt' expiresAt
             FROM user_accounts 
-            WHERE user_account_id = @userId AND activation_token IS NOT NULL;
+            WHERE userAccountId = @userId AND activationToken IS NOT NULL;
         """;
 
         var row = await conn.QueryFirstOrDefaultAsync<ResendActivationTokenDto>(sql, new {userId = request.UserId});
@@ -43,7 +43,7 @@ public class ResendActivationTokenQueryHandler : IRequestHandler<ResendActivatio
             return Result.Fail("Activation token is expired");
         }
 
-        await _iAMEmailService.SendActivationEmailAsync(row.Username, row.Email, row.Token);
+        await _iAMEmailService.SendActivationEmailAsync(request.UserId, row.Username, row.Email, row.Token);
 
         return Result.Ok();
     }

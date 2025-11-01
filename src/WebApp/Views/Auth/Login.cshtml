@@ -1,0 +1,137 @@
+@using WebApp.Models.Auth
+@model LoginViewModel
+@{
+    Layout = "_AuthLayout";
+}
+
+<section class="auth-card" aria-label="Login">
+    <div class="brand">PhotoLite</div>
+    <form class="auth-form" asp-action="Login" asp-controller="Auth" method="post">
+        <div class="form-row">
+            <label asp-for="EmailOrUserName" class="form-label">Email or Username</label>
+            <input asp-for="EmailOrUserName" class="form-input" type="text" placeholder="you@example.com or username" />
+            <span class="error-message" id="login-email-error"></span>
+        </div>
+        <div class="form-row">
+            <label asp-for="Password" class="form-label">Password</label>
+            <input asp-for="Password" class="form-input" type="password" placeholder="••••••••" />
+            <span class="error-message" id="login-password-error"></span>
+        </div>
+        <div class="form-row" style="margin-bottom: 0;">
+            <label
+                style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: normal; margin-bottom: 0;">
+                <input asp-for="RememberMe" type="checkbox" style="cursor: pointer;" />
+                <span>Remember me</span>
+            </label>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn" style="width:100%">Login</button>
+        </div>
+    </form>
+    <div class="alt">Don't have an account? <a href="register.html">Register</a></div>
+</section>
+
+@section Scripts {
+    <script>
+        @if (ViewData["ErrorMessage"] is not null)
+            {
+                <text>
+                    toastr.error("@ViewData["ErrorMessage"]", "");
+                </text>
+        }
+    </script>
+
+    <script>
+            (function () {
+                const form = document.querySelector('.auth-form');
+                if (!form) return;
+
+                const email = document.getElementById('EmailOrUserName');
+                const password = document.getElementById('Password');
+
+                const emailError = document.getElementById('login-email-error');
+                const passwordError = document.getElementById('login-password-error');
+
+                function showError(inputElement, errorElement, message) {
+                    if (errorElement && message) {
+                        errorElement.textContent = message;
+                        if (inputElement) {
+                            inputElement.classList.add('error');
+                        }
+                        return false;
+                    }
+                    return true;
+                }
+
+                function hideError(inputElement, errorElement) {
+                    if (errorElement) {
+                        errorElement.textContent = '';
+                    }
+                    if (inputElement) {
+                        inputElement.classList.remove('error');
+                    }
+                }
+
+                function validateEmail() {
+                    const value = email.value.trim();
+                    hideError(email, emailError);
+
+                    if (!value) {
+                        return showError(email, emailError, 'Email or username is required');
+                    }
+                    if (value.length > 255) {
+                        return showError(email, emailError, 'Email or username must not exceed 255 characters');
+                    }
+                    // Allow both email format and username format
+                    const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+                    const usernameRegex = /^[a-zA-Z0-9_-]+$/;
+
+                    // If it's not an email, check if it's a valid username
+                    if (!emailRegex.test(value)) {
+                        if (!usernameRegex.test(value)) {
+                            return showError(email, emailError, 'Must be a valid email or username');
+                        }
+                        // Username validation
+                        if (value.length < 3) {
+                            return showError(email, emailError, 'Username must be at least 3 characters');
+                        }
+                        if (value.length > 50) {
+                            return showError(email, emailError, 'Username must not exceed 50 characters');
+                        }
+                    }
+                    return true;
+                }
+
+                function validatePassword() {
+                    const value = password.value;
+                    hideError(password, passwordError);
+
+                    if (!value) {
+                        return showError(password, passwordError, 'Password is required');
+                    }
+                    return true;
+                }
+
+                // Real-time validation on input
+                email.addEventListener('input', validateEmail);
+                email.addEventListener('blur', validateEmail);
+                password.addEventListener('input', validatePassword);
+                password.addEventListener('blur', validatePassword);
+
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    const emailValid = validateEmail();
+                    const passwordValid = validatePassword();
+
+                    if (emailValid && passwordValid) {
+                        form.submit();
+                    } else {
+                        // Focus first invalid field
+                        if (!emailValid) email.focus();
+                        else if (!passwordValid) password.focus();
+                    }
+                });
+            })();
+    </script>
+}

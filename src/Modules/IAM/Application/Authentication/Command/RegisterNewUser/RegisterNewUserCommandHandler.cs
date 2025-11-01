@@ -44,7 +44,7 @@ public class RegisterNewUserCommandHandler : IRequestHandler<RegisterNewUserComm
         await _iAMUnitOfWork.UserAccountRepository.AddAsync(newUser);
         _iAMUnitOfWork.Commit();
 
-        await _iAMEmailService.SendActivationEmailAsync(newUser.UserName, newUser.Email, newUser.ActivationToken!.Token);
+        await _iAMEmailService.SendActivationEmailAsync(newUser.Id.Value, newUser.UserName, newUser.Email, newUser.ActivationToken!.Token);
         var result = new RegisterNewUserResult(newUser);
 
         return Result.Ok(result);

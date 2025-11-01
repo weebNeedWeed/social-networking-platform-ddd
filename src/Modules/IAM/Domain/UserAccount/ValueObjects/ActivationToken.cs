@@ -26,4 +26,9 @@ public class ActivationToken : ValueObject
         var expiresAt = DateTime.UtcNow.Add(validityPeriod);
         return new ActivationToken(token, expiresAt);
     }
+
+    public static ActivationToken From(string token, DateTime expiresAt)
+    {
+        return new ActivationToken(token, expiresAt);
+    }
 }

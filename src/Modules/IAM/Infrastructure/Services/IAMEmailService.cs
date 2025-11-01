@@ -19,7 +19,7 @@ public class IAMEmailService : IIAMEmailService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task SendActivationEmailAsync(string userName, string email, string token)
+    public async Task SendActivationEmailAsync(Guid userId, string userName, string email, string token)
     {
         var message = new MimeMessage();
 
@@ -29,7 +29,11 @@ public class IAMEmailService : IIAMEmailService
 
         message.Subject = "Verify Your Email Address";
 
-        var activateLink = string.Format("{0}://{1}/auth/activate", _httpContextAccessor.HttpContext.Request.Scheme, _httpContextAccessor.HttpContext.Request.Host);
+        var activateLink = string.Format("{0}://{1}/auth/activate?userId={2}&token={3}",
+            _httpContextAccessor.HttpContext.Request.Scheme,
+            _httpContextAccessor.HttpContext.Request.Host,
+            userId,
+            token);
 
         var emailContent = GetActivationEmailTemplate();
         emailContent = emailContent.Replace("{{USERNAME}}", userName);

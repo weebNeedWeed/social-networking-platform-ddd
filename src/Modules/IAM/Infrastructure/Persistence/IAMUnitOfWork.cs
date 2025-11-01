@@ -8,10 +8,10 @@ namespace Modules.IAM.Infrastructure.Persistence;
 public class IAMUnitOfWork : IIAMUnitOfWork, IDisposable
 {
     private IUserAccountRepository? _userAccountRepository;
-
     private IDbConnection? _connection; 
     private IDbTransaction? _transaction;
     private bool _disposed = false;
+
 
     public IAMUnitOfWork(IConfiguration configuration)
     {

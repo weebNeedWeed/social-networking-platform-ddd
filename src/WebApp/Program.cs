@@ -1,22 +1,20 @@
-using BuildingBlocks.Application.Common.Behaviors;
 using BuildingBlocks.Infrastructure;
-using Modules.IAM.Application;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Modules.IAM.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllersWithViews();
-
-    var mediatRKey = builder.Configuration.GetValue<string>("MediatR:Key");
-    builder.Services.AddMediatR(c =>
-    {
-        c.RegisterServicesFromAssemblies(typeof(IAMApplicationMarker).Assembly);
-        c.LicenseKey = mediatRKey;
-        c.AddOpenBehavior(typeof(ValidationBehavior<,>));
-    });
+    builder.Services.AddHttpContextAccessor();
     builder.Services.RegisterInsfrastructureBuildingBlocks(builder.Configuration);
     builder.Services.RegisterIAMModule();
-    builder.Services.AddHttpContextAccessor();
+
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(o =>
+        {
+            o.ExpireTimeSpan = TimeSpan.FromDays(1);
+            o.SlidingExpiration = true;
+        });
 }
 
 var app = builder.Build();
@@ -29,6 +27,8 @@ var app = builder.Build();
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
+
+    app.UseAuthentication();
 
     app.UseRouting();
 

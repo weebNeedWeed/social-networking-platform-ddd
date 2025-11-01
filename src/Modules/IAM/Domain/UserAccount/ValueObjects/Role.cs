@@ -19,4 +19,15 @@ public class Role : ValueObject
     {
         Name = name;
     }
+
+    public static Role FromName(string name)
+    {
+        return name switch
+        {
+            "Administrator" => Administrator,
+            "Moderator" => Moderator,
+            "User" => User,
+            _ => throw new ArgumentException($"Invalid role name: {name}", nameof(name))
+        };
+    }
 }

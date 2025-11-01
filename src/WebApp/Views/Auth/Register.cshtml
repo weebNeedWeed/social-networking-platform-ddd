@@ -8,22 +8,22 @@
   <div class="brand">PhotoLite</div>
   <form class="auth-form" asp-action="Register" asp-controller="Auth" method="post">
     <div class="form-row">
-      <label asp-for="UserName" class="form-label"></label>
+      <label asp-for="UserName" class="form-label">Username</label>
       <input asp-for="UserName" class="form-input" type="text" placeholder="Your username" />
       <span class="error-message" id="register-username-error"></span>
     </div>
     <div class="form-row">
-      <label asp-for="Email" class="form-label"></label>
+      <label asp-for="Email" class="form-label">Email</label>
       <input asp-for="Email" class="form-input" type="email" placeholder="you@example.com" />
       <span class="error-message" id="register-email-error"></span>
     </div>
     <div class="form-row">
-      <label asp-for="Password" class="form-label"></label>
+      <label asp-for="Password" class="form-label">Password</label>
       <input asp-for="Password" class="form-input" type="password" placeholder="••••••••" />
       <span class="error-message" id="register-password-error"></span>
     </div>
     <div class="form-row">
-      <label asp-for="PasswordConfirmation" class="form-label"></label>
+      <label asp-for="PasswordConfirmation" class="form-label">Confirm Password</label>
       <input asp-for="PasswordConfirmation" class="form-input" type="password" placeholder="Re-enter your password" />
       <span class="error-message" id="register-password-confirm-error"></span>
     </div>

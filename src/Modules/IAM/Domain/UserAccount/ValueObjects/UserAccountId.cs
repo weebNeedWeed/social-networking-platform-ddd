@@ -20,4 +20,9 @@ public class UserAccountId : ValueObject
     {
         return new UserAccountId(Guid.NewGuid());
     }
+
+    public static UserAccountId FromValue(Guid value)
+    {
+        return new UserAccountId(value);
+    }
 }

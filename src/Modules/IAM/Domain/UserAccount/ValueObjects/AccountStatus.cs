@@ -20,4 +20,16 @@ public class AccountStatus : ValueObject
     {
         Value = value;
     }
+
+    public static AccountStatus FromValue(string value)
+    {
+        return value switch
+        {
+            "PendingVerification" => PendingVerification,
+            "Active" => Active,
+            "Onboarded" => Onboarded,
+            "Locked" => Locked,
+            _ => throw new ArgumentException($"Invalid account status: {value}", nameof(value))
+        };
+    }
 }
